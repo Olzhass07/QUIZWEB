@@ -3,6 +3,7 @@ import { SharedModule } from '../../shared/shared-module';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
+import { Auth } from './services/auth';
 
 @Component({
   selector: 'app-signup',
@@ -11,9 +12,11 @@ import { Router } from '@angular/router';
   styleUrl: './signup.scss'
 })
 export class Signup {
+
   constructor(private fb: FormBuilder, 
     private message: NzMessageService,
-    private router: Router
+    private router: Router,
+    private authservice: Auth
   ) {}
 
 
@@ -29,7 +32,20 @@ export class Signup {
 }
 
 submitForm(){
-  
+  this.authservice.register(this.validateForm.value).subscribe(res=>{
+    this.message
+    .success(
+      `SignUp Successful`,
+      { nzDuration: 5000 }
+    );
+    this.router.navigateByUrl("/login");
+  }, error=>{
+    this.message
+    .error(
+      `${error.error}`,
+      { nzDuration: 5000 }
+    )
+  })
 }
 
  }
