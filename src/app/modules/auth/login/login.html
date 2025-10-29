@@ -4,7 +4,7 @@
             <div nz-row class="imgDiv">
                 <h1 style="margin-left: 100px;">Login</h1>
             </div>
-            <form nz-form [formGroup]="validateForm" class="login-form">
+            <form nz-form [formGroup]="validateForm" class="login-form"(ngSubmit)="submitForm()">
                 <nz-form-item>
                     <nz-form-control nzErrorTip="Please input your email!">
                         <input type="text" nz-input formControlName="email" placeholder="Email" />
@@ -15,7 +15,7 @@
                         <input type="password" nz-input formControlName="password" placeholder="Password" />
                     </nz-form-control>
                 </nz-form-item>
-                <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Log in</button>
+                <button nz-button class="login-form-button login-form-margin" [nzType]  ="'primary'">Log in</button>
                 Or <a routerLink="/register"> Register now! </a>
             </form>
         </div>
