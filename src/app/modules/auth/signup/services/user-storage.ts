@@ -6,6 +6,17 @@ const USER = 'q_user';
   providedIn: 'root'
 })
 export class UserStorage {
+  saveUser(user: { id: any; role: any }): void {
+    try {
+      const normalized = {
+        id: user?.id ?? '',
+        role: (user?.role ?? '').toString().toUpperCase()
+      };
+      UserStorage.setUser(normalized);
+    } catch (e) {
+      // no-op: keep method safe in case localStorage is unavailable
+    }
+  }
   constructor() { }
 
   static setUser(user: any): void {

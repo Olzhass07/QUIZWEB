@@ -4,8 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { Router } from '@angular/router';
 import { Auth } from '../signup/services/auth';
-
-
+import { UserStorage as UserStorageService } from '../signup/services/user-storage';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +21,7 @@ export class Login implements OnInit {
     private auth: Auth,
     private message: NzMessageService,
     private router: Router,
+    private userStorage: UserStorageService
   ) {}
 
   ngOnInit(): void {
@@ -39,13 +39,28 @@ export class Login implements OnInit {
 
     this.auth.login(this.validateForm.value).subscribe({
       next: (res) => {
-        this.message.success('Login successful! Welcome back.', { nzDuration: 5000 });
-        // Optionally navigate after login
-        // this.router.navigate(['/']);
-        console.log(res);
+        // уведомление
+        this.message.success('Login Success', { nzDuration: 5000 });
+
+        // объект пользователя
+        const user = {
+          id: res.id,
+          role: res.role
+        };
+
+        // сохранение пользователя в локальное хранилище
+        this.userStorage.saveUser(user);
+        console.log('User saved:', user);
+
+        // переход после успешного входа
+        if (user.role && String(user.role).toUpperCase() === 'ADMIN') {
+          this.router.navigateByUrl('/admin/dashboard');
+        } else {
+          this.router.navigateByUrl('/user/dashboard');
+        }
       },
       error: (err) => {
-        this.message.error('Login failed. Please try again.', { nzDuration: 5000 });
+        this.message.error('Bad credentials', { nzDuration: 5000 });
         console.error(err);
       }
     });
