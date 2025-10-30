@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared-module';
+import { Router } from '@angular/router';
+import { AdminService } from '../../services/admin';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-create-test',
@@ -12,7 +15,12 @@ import { SharedModule } from '../../../shared/shared-module';
 export class CreateTest {
   testForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private devicesService: AdminService,
+    private notification: NzNotificationService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.testForm = this.fb.group({
@@ -20,5 +28,27 @@ export class CreateTest {
       description: [null, [Validators.required]],
       time: [null, [Validators.required]],
     });
+  }
+
+  submitForm() {
+    if (this.testForm.valid) {
+      this.devicesService.createTest(this.testForm.value).subscribe({
+        next: (res) => {
+          this.notification.success(
+            'Success',
+            'Test created successfully',
+            { nzDuration: 5000 }
+          );
+          this.router.navigateByUrl('/admin/dashboard');
+        },
+        error: (error) => {
+          this.notification.error(
+            'Error',
+            `${error.error}`,
+            { nzDuration: 5000 }
+          );
+        }
+      });
+    }
   }
 }
