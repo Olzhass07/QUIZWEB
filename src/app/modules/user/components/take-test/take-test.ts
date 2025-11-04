@@ -15,6 +15,8 @@ export class TakeTest {
   questions: any[] = [];
   testId: any;
 
+  selectedAnswers: { [key: number]: string } = {};
+
   constructor(
     private testService: AdminService,
     private activatedRoute: ActivatedRoute,
@@ -33,4 +35,9 @@ export class TakeTest {
     });
   }
 
+  onAnswerChange(questionId: number, selectedOption: string){
+    this.selectedAnswers[questionId] = selectedOption;
+    console.log(this.selectedAnswers);
+    
+  }
 }
