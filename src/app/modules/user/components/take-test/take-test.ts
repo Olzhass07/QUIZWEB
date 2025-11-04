@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { SharedModule } from '../../../shared/shared-module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { AdminService } from '../../../admin/services/admin';
+import { TestService } from '../dashboard/services/test';
+import { UserStorage } from '../../../auth/signup/services/user-storage';
 
 @Component({
   selector: 'app-take-test',
@@ -18,7 +19,7 @@ export class TakeTest {
   selectedAnswers: { [key: number]: string } = {};
 
   constructor(
-    private testService: AdminService,
+    private testService: TestService,
     private activatedRoute: ActivatedRoute,
     private message: NzMessageService,
     private router: Router
@@ -39,5 +40,33 @@ export class TakeTest {
     this.selectedAnswers[questionId] = selectedOption;
     console.log(this.selectedAnswers);
     
+  }
+
+  submitAnswers(){
+    const answerList = Object.keys(this.selectedAnswers).map(questionId => {
+      return {
+        questionId: +questionId,
+        selectedOption: this.selectedAnswers[questionId]
+      }
+    })
+
+    const data = {
+      testId: this.testId,
+      userId: UserStorage.getUserID(),
+      responses: answerList
+    }
+
+    this.testService.submitTest(data).subscribe(res => {
+      this.message
+      .success(
+        'Test Submitted Successfully!',
+        { nzDuration: 5000 })
+      this.router.navigateByUrl("/user/view-test-results");
+    }, error => {
+      this.message
+      .error(
+        `${error.error}`,
+        { nzDuration: 5000 })
+    });
   }
 }
