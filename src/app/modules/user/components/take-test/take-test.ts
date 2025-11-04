@@ -19,6 +19,7 @@ export class TakeTest {
   selectedAnswers: { [key: number]: string } = {};
 
   timeRemaining: number = 0;
+  interval: any; 
 
   constructor(
     private testService: TestService,
@@ -36,8 +37,20 @@ export class TakeTest {
         console.log(this.questions);
 
         this.timeRemaining = res.testDTO.time || 0;
+        this.startTimer();
       })
     })
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      if (this.timeRemaining > 0) {
+        this.timeRemaining--;
+      } else {
+        clearInterval(this.interval);
+        this.submitAnswers();
+      }
+    },1000 )
   }
 
   getFormattedTime(): string{
