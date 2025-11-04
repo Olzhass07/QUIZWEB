@@ -4,6 +4,7 @@ import { Dashboard } from './components/dashboard/dashboard';
 import { CreateTest } from './components/create-test/create-test';
 import { AddQuestionInTest } from './components/add-question-in-test/add-question-in-test';
 import { ViewTest } from './components/view-test/view-test';
+import { ViewTestResults } from './components/view-test-results/view-test-results';
 
 
 const routes: Routes = [
@@ -11,6 +12,7 @@ const routes: Routes = [
   {path : 'create-test', component: CreateTest},
   {path : 'add-question/:id', component: AddQuestionInTest},
   {path : 'view-test/:id', component: ViewTest},
+  {path : 'view-test-results', component: ViewTestResults},
 ];
 
 @NgModule({
