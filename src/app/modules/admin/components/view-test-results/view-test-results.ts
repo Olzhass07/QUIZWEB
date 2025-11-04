@@ -17,7 +17,8 @@ export class ViewTestResults {
   ngOnInit() {
     this.getTestResults();
   }
-
+  
+  
   getTestResults() {
     this.testService.getTestResults().subscribe(res => {
       this.resultsData = res;

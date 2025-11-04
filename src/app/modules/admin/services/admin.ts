@@ -28,7 +28,7 @@ export class AdminService {
   }
 
   getTestResults(): Observable<any> {
-    return this.http.get(BASIC_URL + 'api/test-results');
+    return this.http.get(BASIC_URL + 'api/test-result');
   }
 
   
