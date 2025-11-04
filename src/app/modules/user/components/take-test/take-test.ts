@@ -18,6 +18,8 @@ export class TakeTest {
 
   selectedAnswers: { [key: number]: string } = {};
 
+  timeRemaining: number = 0;
+
   constructor(
     private testService: TestService,
     private activatedRoute: ActivatedRoute,
@@ -32,8 +34,16 @@ export class TakeTest {
       this.testService.getTestQuestions(this.testId).subscribe(res => {
         this.questions = res.questions;
         console.log(this.questions);
-      });
-    });
+
+        this.timeRemaining = res.testDTO.time || 0;
+      })
+    })
+  }
+
+  getFormattedTime(): string{
+    const minutes = Math.floor(this.timeRemaining / 60);
+    const seconds = this.timeRemaining % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
 
   onAnswerChange(questionId: number, selectedOption: string){
