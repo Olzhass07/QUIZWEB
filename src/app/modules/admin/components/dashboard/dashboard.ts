@@ -41,4 +41,19 @@ export class Dashboard {
     return `${minutes} минут ${seconds} секунд`;
   }
 
+  onDeleteTest(id: number) {
+    if (!confirm('Осы тестті жоюға сенімдісіз бе?')) {
+      return;
+    }
+    this.testService.deleteTest(id).subscribe({
+      next: () => {
+        this.notification.success('Сәтті', 'Тест жойылды', { nzDuration: 4000 });
+        this.getAllTests();
+      },
+      error: (err) => {
+        this.notification.error('Қате', `${err.error || 'Жою кезінде қате'}`, { nzDuration: 5000 });
+      }
+    })
+  }
+
 }

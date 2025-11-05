@@ -31,5 +31,13 @@ export class AdminService {
     return this.http.get(BASIC_URL + 'api/test-result');
   }
 
+  updateTest(id: number, testDto): Observable<any> {
+    return this.http.put(BASIC_URL + `api/test/${id}`, testDto);
+  }
+
+  deleteTest(id: number): Observable<any> {
+    return this.http.delete(BASIC_URL + `api/test/${id}`);
+  }
+
   
 }
