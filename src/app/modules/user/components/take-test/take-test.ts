@@ -82,7 +82,7 @@ export class TakeTest {
     this.testService.submitTest(data).subscribe(res => {
       this.message
       .success(
-        'Test Submitted Successfully!',
+        'Тест сәтті жіберілді!',
         { nzDuration: 5000 })
       this.router.navigateByUrl("/user/view-test-results");
     }, error => {

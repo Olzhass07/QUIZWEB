@@ -46,15 +46,15 @@ export class AddQuestionInTest {
     this.adminService.addQuestionInTest(questionDto).subscribe(res=>{
       this.notification
       .success(
-        'SUCCESS',
-        'Question Created Successfully.',
+        'Сәтті',
+        'Сұрақ сәтті құрылды.',
         { nzDuration: 5000 }
       );
       this.router.navigateByUrl("/admin/dashboard");
     }, error=>{
       this.notification
       .error(
-        'Error',
+        'Қате',
         `${error.error}`,
         { nzDuration: 5000 }
       );

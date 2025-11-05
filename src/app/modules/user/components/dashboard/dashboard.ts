@@ -28,8 +28,8 @@ export class Dashboard {
       this.tests = res;
     }, error => {
       this.notification.error(
-        'ERROR',
-        'Something Went Wrong. Try Again',
+        'Қате',
+        'Бірдеңе қате кетті. Қайта көріңіз',
         { nzDuration: 5000 }
       );
     });
@@ -38,7 +38,7 @@ export class Dashboard {
   getFormattedTime(time): string {
     const minutes = Math.floor(time / 60);
     const seconds = time % 60;
-    return `${minutes} minutes ${seconds} seconds`;
+    return `${minutes} минут ${seconds} секунд`;
   }
 
 }

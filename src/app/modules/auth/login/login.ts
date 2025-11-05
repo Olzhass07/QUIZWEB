@@ -40,7 +40,7 @@ export class Login implements OnInit {
     this.auth.login(this.validateForm.value).subscribe({
       next: (res) => {
         // уведомление
-        this.message.success('Login Success', { nzDuration: 5000 });
+        this.message.success('Сәтті кіру', { nzDuration: 5000 });
 
         // объект пользователя
         const user = {
@@ -60,7 +60,7 @@ export class Login implements OnInit {
         }
       },
       error: (err) => {
-        this.message.error('Bad credentials', { nzDuration: 5000 });
+        this.message.error('Қате деректер', { nzDuration: 5000 });
         console.error(err);
       }
     });

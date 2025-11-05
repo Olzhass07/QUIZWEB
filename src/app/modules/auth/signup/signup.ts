@@ -35,7 +35,7 @@ submitForm(){
   this.authservice.register(this.validateForm.value).subscribe(res=>{
     this.message
     .success(
-      `SignUp Successful`,
+      `Тіркелу сәтті өтті`,
       { nzDuration: 5000 }
     );
     this.router.navigateByUrl("/login");

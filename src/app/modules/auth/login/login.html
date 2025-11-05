@@ -2,21 +2,21 @@
     <div class="parent">
         <div class="child">
             <div nz-row class="imgDiv">
-                <h1 style="margin-left: 100px;">Login</h1>
+                <h1 style="margin-left: 100px;">Кіру</h1>
             </div>
             <form nz-form [formGroup]="validateForm" class="login-form"(ngSubmit)="submitForm()">
                 <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input your email!">
-                        <input type="text" nz-input formControlName="email" placeholder="Email" />
+                    <nz-form-control nzErrorTip="Электрондық поштаны енгізіңіз!">
+                        <input type="text" nz-input formControlName="email" placeholder="Электрондық пошта" />
                     </nz-form-control>
                 </nz-form-item>
                 <nz-form-item>
-                    <nz-form-control nzErrorTip="Please input your Password!">
-                        <input type="password" nz-input formControlName="password" placeholder="Password" />
+                    <nz-form-control nzErrorTip="Құпиясөзді енгізіңіз!">
+                        <input type="password" nz-input formControlName="password" placeholder="Құпиясөз" />
                     </nz-form-control>
                 </nz-form-item>
-                <button nz-button class="login-form-button login-form-margin" [nzType]  ="'primary'">Log in</button>
-                Or <a routerLink="/register"> Register now! </a>
+                <button nz-button class="login-form-button login-form-margin" [nzType]  ="'primary'">Кіру</button>
+                Немесе <a routerLink="/register"> қазір тіркеліңіз! </a>
             </form>
         </div>
     </div>

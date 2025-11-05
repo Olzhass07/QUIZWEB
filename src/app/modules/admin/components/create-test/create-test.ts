@@ -35,15 +35,15 @@ export class CreateTest {
       this.devicesService.createTest(this.testForm.value).subscribe({
         next: (res) => {
           this.notification.success(
-            'Success',
-            'Test created successfully',
+            'Сәтті',
+            'Тест сәтті құрылды',
             { nzDuration: 5000 }
           );
           this.router.navigateByUrl('/admin/dashboard');
         },
         error: (error) => {
           this.notification.error(
-            'Error',
+            'Қате',
             `${error.error}`,
             { nzDuration: 5000 }
           );

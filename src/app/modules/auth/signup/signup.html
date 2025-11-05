@@ -2,21 +2,21 @@
   <div class="parent">
     <div class="child">
       <div nz-row class="imgDiv">
-        <h1 style="margin-left: 80px;">Sign Up</h1>
+        <h1 style="margin-left: 80px;">Тіркелу</h1>
       </div>
 
       <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
         <nz-form-item>
-          <nz-form-control nzHasFeedback nzErrorTip="The input is not valid email!">
-            <input nz-input placeholder="E-mail" formControlName="email" />
+          <nz-form-control nzHasFeedback nzErrorTip="Электрондық пошта дұрыс емес!">
+            <input nz-input placeholder="Электрондық пошта" formControlName="email" />
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzHasFeedback nzErrorTip="The input is not valid password!">
+          <nz-form-control nzHasFeedback nzErrorTip="Құпиясөз дұрыс емес!">
             <input
               nz-input
-              placeholder="Password"
+              placeholder="Құпиясөз"
               type="password"
               formControlName="password"
             />
@@ -24,8 +24,8 @@
         </nz-form-item>
 
         <nz-form-item>
-          <nz-form-control nzHasFeedback nzErrorTip="The input is not valid Name!">
-            <input nz-input placeholder="Name" formControlName="name" />
+          <nz-form-control nzHasFeedback nzErrorTip="Аты дұрыс емес!">
+            <input nz-input placeholder="Аты" formControlName="name" />
           </nz-form-control>
         </nz-form-item>
 
@@ -36,10 +36,10 @@
           class="login-form-button login-form-margin"
           type="submit"
         >
-          Register
+          Тіркелу
         </button>
 
-        <span>Or <a routerLink="/login">login now!</a></span>
+        <span>Немесе <a routerLink="/login">қазір кіріңіз!</a></span>
       </form>
     </div>
   </div>
