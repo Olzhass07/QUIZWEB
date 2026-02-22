@@ -6,40 +6,97 @@
       </div>
 
       <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+        <!-- 1. Name -->
+        <nz-form-item>
+          <nz-form-control nzHasFeedback nzErrorTip="Атыңызды енгізіңіз!">
+            <input nz-input placeholder="Аты-жөніңіз" formControlName="name" />
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- 2. Age -->
+        <nz-form-item>
+          <nz-form-control>
+            <nz-form-label [nzNoColon]="true">Жасыңызды көрсетіңіз</nz-form-label>
+            <nz-input-number style="width: 100%;" [nzMin]="1" [nzMax]="120" placeholder="Жасыңыз"
+              formControlName="age"></nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+
+        <!-- 3. Email -->
         <nz-form-item>
           <nz-form-control nzHasFeedback nzErrorTip="Электрондық пошта дұрыс емес!">
             <input nz-input placeholder="Электрондық пошта" formControlName="email" />
           </nz-form-control>
         </nz-form-item>
 
+        <!-- 4. Password -->
         <nz-form-item>
-          <nz-form-control nzHasFeedback nzErrorTip="Құпиясөз дұрыс емес!">
-            <input
-              nz-input
-              placeholder="Құпиясөз"
-              type="password"
-              formControlName="password"
-            />
+          <nz-form-control nzHasFeedback [nzErrorTip]="passwordErrorTpl">
+            <nz-input-group [nzSuffix]="suffixTemplate">
+              <input nz-input [type]="passwordVisible ? 'text' : 'password'" placeholder="Құпия сөз"
+                formControlName="password" />
+            </nz-input-group>
+            <ng-template #suffixTemplate>
+              <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                (click)="passwordVisible = !passwordVisible"></i>
+            </ng-template>
+
+            <!-- Under-input Hints -->
+            <div *ngIf="password?.dirty && password?.invalid" class="password-requirements"
+              style="margin-top: 10px; font-size: 12px; padding: 10px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 4px;">
+              <div [class.valid]="password?.value?.length >= 8" [class.invalid]="password?.value?.length < 8">
+                <i nz-icon [nzType]="password?.value?.length >= 8 ? 'check-circle' : 'close-circle'"></i> Сұрақ 8+
+                символ
+              </div>
+              <div [class.valid]="checkRequirement(regexUpper)" [class.invalid]="!checkRequirement(regexUpper)">
+                <i nz-icon [nzType]="checkRequirement(regexUpper) ? 'check-circle' : 'close-circle'"></i> Бас әріп (A-Z)
+              </div>
+              <div [class.valid]="checkRequirement(regexLower)" [class.invalid]="!checkRequirement(regexLower)">
+                <i nz-icon [nzType]="checkRequirement(regexLower) ? 'check-circle' : 'close-circle'"></i> Кіші әріп
+                (a-z)
+              </div>
+              <div [class.valid]="checkRequirement(regexDigit)" [class.invalid]="!checkRequirement(regexDigit)">
+                <i nz-icon [nzType]="checkRequirement(regexDigit) ? 'check-circle' : 'close-circle'"></i> Сан (0-9)
+              </div>
+              <div [class.valid]="checkRequirement(regexSpecial)" [class.invalid]="!checkRequirement(regexSpecial)">
+                <i nz-icon [nzType]="checkRequirement(regexSpecial) ? 'check-circle' : 'close-circle'"></i> Арнайы
+                символ (@#$%^&+=!)
+              </div>
+            </div>
+
+            <ng-template #passwordErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('pattern')">Құпиясөз талаптарға сай емес!</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
+        <!-- 5. Confirm Password -->
         <nz-form-item>
-          <nz-form-control nzHasFeedback nzErrorTip="Аты дұрыс емес!">
-            <input nz-input placeholder="Аты" formControlName="name" />
+          <nz-form-control nzHasFeedback [nzErrorTip]="confirmErrorTpl">
+            <nz-input-group [nzSuffix]="confirmSuffixTemplate">
+              <input nz-input [type]="confirmPasswordVisible ? 'text' : 'password'" placeholder="Құпия сөзді растау"
+                formControlName="confirmPassword" />
+            </nz-input-group>
+            <ng-template #confirmSuffixTemplate>
+              <i nz-icon [nzType]="confirmPasswordVisible ? 'eye-invisible' : 'eye'"
+                (click)="confirmPasswordVisible = !confirmPasswordVisible"></i>
+            </ng-template>
+            <ng-template #confirmErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">Құпиясөзді растау міндетті!</ng-container>
+              <ng-container *ngIf="validateForm.hasError('mismatch')">Құпиясөздер сәйкес келмейді!</ng-container>
+            </ng-template>
           </nz-form-control>
         </nz-form-item>
 
-        
-        <button
-          nz-button
-          nzType="primary"
-          class="login-form-button login-form-margin"
-          type="submit"
-        >
+        <button nz-button nzType="primary" class="login-form-button login-form-margin" type="submit"
+          [disabled]="validateForm.invalid">
           Тіркелу
         </button>
 
-        <span>Немесе <a routerLink="/login">қазір кіріңіз!</a></span>
+        <div style="margin-top: 10px; text-align: center;">
+          Немесе <a routerLink="/login">қазір кіріңіз!</a>
+        </div>
       </form>
     </div>
   </div>

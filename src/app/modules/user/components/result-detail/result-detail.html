@@ -1,0 +1,49 @@
+<div style="padding: 20px; max-width: 800px; margin: auto;">
+    <nz-card *ngIf="resultData" nzTitle="Тест нәтижесі">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2>{{ resultData.testName }}</h2>
+            <nz-divider></nz-divider>
+            <div nz-row [nzGutter]="16">
+                <div nz-col nzSpan="8">
+                    <p><strong>Жалпы сұрақтар:</strong></p>
+                    <h3>{{ resultData.totalQuestions }}</h3>
+                </div>
+                <div nz-col nzSpan="8">
+                    <p><strong>Дұрыс жауаптар:</strong></p>
+                    <h3 style="color: #52c41a;">{{ resultData.correctAnswers }}</h3>
+                </div>
+                <div nz-col nzSpan="8">
+                    <p><strong>Пайыз:</strong></p>
+                    <h3>{{ resultData.percentage }}%</h3>
+                </div>
+            </div>
+        </div>
+
+        <nz-divider nzText="Сұрақтар бойынша есеп"></nz-divider>
+
+        <div *ngFor="let detail of resultData.questionDetails; let i = index"
+            [style.background-color]="detail.isCorrect ? '#f6ffed' : '#fff1f0'"
+            [style.border]="detail.isCorrect ? '1px solid #b7eb8f' : '1px solid #ffa39e'"
+            style="padding: 15px; margin-bottom: 15px; border-radius: 8px;">
+
+            <h4>{{ i + 1 }}. {{ detail.questionText }}</h4>
+
+            <div [style.color]="detail.isCorrect ? '#389e0d' : '#cf1322'">
+                <p><strong>Сіздің жауабыңыз:</strong> {{ detail.selectedOption }}</p>
+            </div>
+
+            <div *ngIf="!detail.isCorrect" style="color: #389e0d;">
+                <p><strong>Дұрыс жауап:</strong> {{ detail.correctOption }}</p>
+            </div>
+
+            <div *ngIf="detail.explanation"
+                style="margin-top: 10px; padding: 10px; background: #fff; border-left: 4px solid #1890ff;">
+                <p style="margin-bottom: 0;"><strong>Түсіндіру:</strong> {{ detail.explanation }}</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <button nz-button nzType="primary" routerLink="/user/dashboard">Басты бетке қайту</button>
+        </div>
+    </nz-card>
+</div>

@@ -22,7 +22,7 @@ export class EditTest {
     private notification: NzNotificationService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.testForm = this.fb.group({
@@ -63,6 +63,9 @@ export class EditTest {
       this.testForm.markAllAsTouched();
       return;
     }
+
+    // Send form values directly (title, description, time)
+    // The ID is already passed in the URL path
     this.adminService.updateTest(this.id, this.testForm.value).subscribe({
       next: () => {
         this.notification.success('Сәтті', 'Тест сәтті жаңартылды', { nzDuration: 5000 });

@@ -9,12 +9,13 @@ import { EditTest } from './components/edit-test/edit-test';
 
 
 const routes: Routes = [
-  {path : 'dashboard', component: Dashboard},
-  {path : 'create-test', component: CreateTest},
-  {path : 'add-question/:id', component: AddQuestionInTest},
-  {path : 'view-test/:id', component: ViewTest},
-  {path : 'edit-test/:id', component: EditTest},
-  {path : 'view-test-results', component: ViewTestResults},
+  { path: 'dashboard', component: Dashboard },
+  { path: 'create-test', component: CreateTest },
+  { path: 'add-question/:id', component: AddQuestionInTest },
+  { path: 'edit-question/:id/:questionId', component: AddQuestionInTest },
+  { path: 'view-test/:id', component: ViewTest },
+  { path: 'edit-test/:id', component: EditTest },
+  { path: 'view-test-results', component: ViewTestResults },
 ];
 
 @NgModule({

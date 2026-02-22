@@ -15,6 +15,10 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzRadioModule } from 'ng-zorro-antd/radio';
 
 @NgModule({
   exports: [
@@ -33,6 +37,10 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzGridModule,
     NzLayoutModule,
     NzDividerModule,
+    NzStatisticModule,
+    NzProgressModule,
+    NzInputNumberModule,
+    NzRadioModule
   ],
 })
-export class DemoNgZorroAntdModule {}
+export class DemoNgZorroAntdModule { }

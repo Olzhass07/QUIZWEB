@@ -4,7 +4,7 @@
             <div nz-row class="imgDiv">
                 <h1 style="margin-left: 100px;">Кіру</h1>
             </div>
-            <form nz-form [formGroup]="validateForm" class="login-form"(ngSubmit)="submitForm()">
+            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
                 <nz-form-item>
                     <nz-form-control nzErrorTip="Электрондық поштаны енгізіңіз!">
                         <input type="text" nz-input formControlName="email" placeholder="Электрондық пошта" />
@@ -12,10 +12,17 @@
                 </nz-form-item>
                 <nz-form-item>
                     <nz-form-control nzErrorTip="Құпиясөзді енгізіңіз!">
-                        <input type="password" nz-input formControlName="password" placeholder="Құпиясөз" />
+                        <nz-input-group [nzSuffix]="suffixTemplate">
+                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password"
+                                placeholder="Құпиясөз" />
+                        </nz-input-group>
+                        <ng-template #suffixTemplate>
+                            <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                                (click)="passwordVisible = !passwordVisible"></i>
+                        </ng-template>
                     </nz-form-control>
                 </nz-form-item>
-                <button nz-button class="login-form-button login-form-margin" [nzType]  ="'primary'">Кіру</button>
+                <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Кіру</button>
                 Немесе <a routerLink="/register"> қазір тіркеліңіз! </a>
             </form>
         </div>

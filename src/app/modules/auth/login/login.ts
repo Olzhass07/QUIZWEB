@@ -22,7 +22,7 @@ export class Login implements OnInit {
     private message: NzMessageService,
     private router: Router,
     private userStorage: UserStorageService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -30,6 +30,8 @@ export class Login implements OnInit {
       password: [null, [Validators.required]]
     });
   }
+
+  passwordVisible = false;
 
   submitForm(): void {
     if (this.validateForm.invalid) {
@@ -39,20 +41,15 @@ export class Login implements OnInit {
 
     this.auth.login(this.validateForm.value).subscribe({
       next: (res) => {
-        // уведомление
         this.message.success('Сәтті кіру', { nzDuration: 5000 });
 
-        // объект пользователя
         const user = {
           id: res.id,
           role: res.role
         };
 
-        // сохранение пользователя в локальное хранилище
         this.userStorage.saveUser(user);
-        console.log('User saved:', user);
 
-        // переход после успешного входа
         if (user.role && String(user.role).toUpperCase() === 'ADMIN') {
           this.router.navigateByUrl('/admin/dashboard');
         } else {
@@ -60,8 +57,7 @@ export class Login implements OnInit {
         }
       },
       error: (err) => {
-        this.message.error('Қате деректер', { nzDuration: 5000 });
-        console.error(err);
+        this.message.error(err.error || 'Қате деректер', { nzDuration: 5000 });
       }
     });
   }

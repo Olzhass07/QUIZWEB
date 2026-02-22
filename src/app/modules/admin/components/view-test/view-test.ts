@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SharedModule } from '../../../shared/shared-module';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../services/admin';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-view-test',
@@ -15,18 +16,32 @@ export class ViewTest {
   testId: any;
 
   constructor(private adminService: AdminService,
-    private activatedRoute: ActivatedRoute
-  ){}
+    private activatedRoute: ActivatedRoute,
+    private notification: NzNotificationService
+  ) { }
 
-  ngOnInit(){
-    this.activatedRoute.paramMap.subscribe(params =>{
+  ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
       this.testId = +params.get('id');
-
-      this.adminService.getTestQuestions(this.testId).subscribe(res =>{
-        this.questions = res.questions;
-        console.log(this.questions);
-      })
+      this.getTestDetails();
     })
+  }
+
+  getTestDetails() {
+    this.adminService.getTestQuestions(this.testId).subscribe(res => {
+      this.questions = res.questions;
+    })
+  }
+
+  deleteQuestion(questionId: number) {
+    if (confirm('Осы сұрақты жоюға сенімдісіз бе?')) {
+      this.adminService.deleteQuestion(questionId).subscribe(res => {
+        this.notification.success('Сәтті', 'Сұрақ жойылды', { nzDuration: 4000 });
+        this.getTestDetails();
+      }, error => {
+        this.notification.error('Қате', `${error.error}`, { nzDuration: 4000 });
+      });
+    }
   }
 
 }

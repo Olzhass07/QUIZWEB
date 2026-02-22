@@ -9,7 +9,7 @@ const BASIC_URL = 'http://localhost:8080/';
 })
 export class AdminService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createTest(testDto): Observable<any> {
     return this.http.post(BASIC_URL + 'api/test', testDto);
@@ -35,9 +35,19 @@ export class AdminService {
     return this.http.put(BASIC_URL + `api/test/${id}`, testDto);
   }
 
+  updateQuestion(id: number, questionDto): Observable<any> {
+    return this.http.put(BASIC_URL + `api/test/question/${id}`, questionDto);
+  }
+
+  deleteQuestion(id: number): Observable<any> {
+    return this.http.delete(BASIC_URL + `api/test/question/${id}`);
+  }
+
+  getQuestionById(id: number): Observable<any> {
+    return this.http.get(BASIC_URL + `api/test/question-details/${id}`);
+  }
+
   deleteTest(id: number): Observable<any> {
     return this.http.delete(BASIC_URL + `api/test/${id}`);
   }
-
-  
 }

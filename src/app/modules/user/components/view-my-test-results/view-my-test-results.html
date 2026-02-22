@@ -6,6 +6,7 @@
         <th>Жалпы сұрақтар</th>
         <th>Дұрыс жауаптар</th>
         <th>Пайыз</th>
+        <th>Әрекет</th>
       </tr>
     </thead>
 
@@ -15,6 +16,9 @@
         <td>{{ data.totalQuestions }}</td>
         <td>{{ data.correctAnswers }}</td>
         <td>{{ data.percentage }}%</td>
+        <td>
+          <button nz-button nzType="link" [routerLink]="['/user/result-detail', data.id]">Көру</button>
+        </td>
       </tr>
     </tbody>
   </nz-table>

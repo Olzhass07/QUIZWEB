@@ -4,10 +4,22 @@
       <nz-form-label [nzNoColon]="true">Сұрақ атауы</nz-form-label>
       <nz-form-item>
         <nz-form-control nzErrorTip="Бұл өріс міндетті!">
-          <input type="text" nz-input formControlName="questionText" placeholder="Сұрақ мәтіні" />
+          <input type="text" nz-input formControlName="questionText" placeholder="Сұрақ мәтіні" #questionInput />
         </nz-form-control>
       </nz-form-item>
 
+      <nz-form-label [nzNoColon]="true">Сұрақ түрі</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Бұл өріс міндетті!">
+          <nz-select formControlName="questionType">
+            <nz-option nzValue="MULTIPLE_CHOICE" nzLabel="Таңдаулы (4 нұсқа)"></nz-option>
+            <nz-option nzValue="TRUE_FALSE" nzLabel="Ақиқат/Жалған"></nz-option>
+            <nz-option nzValue="SHORT_ANSWER" nzLabel="Қысқа жауап"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div *ngIf="questionForm.get('questionType').value === 'MULTIPLE_CHOICE'">
         <nz-form-label [nzNoColon]="true">A нұсқасы</nz-form-label>
         <nz-form-item>
           <nz-form-control nzErrorTip="Бұл өріс міндетті!">
@@ -35,17 +47,40 @@
             <input type="text" nz-input formControlName="optionD" placeholder="D нұсқасы" />
           </nz-form-control>
         </nz-form-item>
+      </div>
 
-        <nz-form-label [nzNoColon]="true">Дұрыс нұсқа</nz-form-label>
-        <nz-form-item>
-          <nz-form-control nzErrorTip="Бұл өріс міндетті!">
-            <input type="text" nz-input formControlName="correctOption" placeholder="Дұрыс нұсқа" />
-          </nz-form-control>
-        </nz-form-item>
+      <nz-form-label [nzNoColon]="true">Дұрыс жауап</nz-form-label>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Бұл өріс міндетті!">
+          <ng-container [ngSwitch]="questionForm.get('questionType').value">
+            <nz-select *ngSwitchCase="'MULTIPLE_CHOICE'" formControlName="correctOption"
+              placeholder="Дұрыс нұсқаны таңдаңыз">
+              <nz-option nzValue="optionA" nzLabel="A"></nz-option>
+              <nz-option nzValue="optionB" nzLabel="B"></nz-option>
+              <nz-option nzValue="optionC" nzLabel="C"></nz-option>
+              <nz-option nzValue="optionD" nzLabel="D"></nz-option>
+            </nz-select>
+            <nz-select *ngSwitchCase="'TRUE_FALSE'" formControlName="correctOption" placeholder="Ақиқат немесе Жалған">
+              <nz-option nzValue="True" nzLabel="Ақиқат"></nz-option>
+              <nz-option nzValue="False" nzLabel="Жалған"></nz-option>
+            </nz-select>
+            <input *ngSwitchDefault type="text" nz-input formControlName="correctOption"
+              placeholder="Дұрыс жауапты жазыңыз" />
+          </ng-container>
+        </nz-form-control>
+      </nz-form-item>
 
-        <div style="padding-bottom: 30px;">
-          <button nz-button class="login-form-button" nzType="primary" [disabled]="questionForm.invalid">Жіберу</button>
-        </div>
+      <nz-form-label [nzNoColon]="true">Түсініктеме (дұрыс жауапқа түсінік)</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <textarea nz-input formControlName="explanation" placeholder="Дұрыс жауаптың себебін түсіндіріңіз"
+            [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+
+      <div style="padding-bottom: 30px;">
+        <button nz-button class="login-form-button" nzType="primary" [disabled]="questionForm.invalid">Жіберу</button>
+      </div>
     </form>
   </div>
 </div>

@@ -3,32 +3,39 @@
     <div class="question" *ngFor="let question of questions">
       <h3>{{ question.questionText }}</h3>
 
-      <div>
-        <label>
-          <input type="radio" name="question{{ question.id }}" />
-          {{ question.optionA }}
-        </label>
+      <div [ngSwitch]="question.questionType">
+        <!-- Multiple Choice -->
+        <div *ngSwitchCase="'MULTIPLE_CHOICE'">
+          <div><label><input type="radio" disabled /> {{ question.optionA }}</label></div>
+          <div><label><input type="radio" disabled /> {{ question.optionB }}</label></div>
+          <div><label><input type="radio" disabled /> {{ question.optionC }}</label></div>
+          <div><label><input type="radio" disabled /> {{ question.optionD }}</label></div>
+        </div>
+
+        <!-- True or False -->
+        <div *ngSwitchCase="'TRUE_FALSE'">
+          <div><label><input type="radio" disabled /> Ақиқат</label></div>
+          <div><label><input type="radio" disabled /> Жалған</label></div>
+        </div>
+
+        <!-- Short Answer -->
+        <div *ngSwitchCase="'SHORT_ANSWER'">
+          <p><em>(Қысқа жауап форматы)</em></p>
+        </div>
       </div>
 
-      <div>
-        <label>
-          <input type="radio" name="question{{ question.id }}" />
-          {{ question.optionB }}
-        </label>
+      <div style="margin-top: 10px; font-weight: bold;">
+        Түрі: {{ question.questionType }} | Дұрыс жауап: {{ question.correctOption }}
       </div>
 
-      <div>
-        <label>
-          <input type="radio" name="question{{ question.id }}" />
-          {{ question.optionC }}
-        </label>
+      <div *ngIf="question.explanation" style="margin-top: 5px; color: #666; font-style: italic;">
+        Түсініктеме: {{ question.explanation }}
       </div>
 
-      <div>
-        <label>
-          <input type="radio" name="question{{ question.id }}" />
-          {{ question.optionD }}
-        </label>
+      <div style="margin-top: 10px;">
+        <button nz-button nzType="default" [routerLink]="['/admin/edit-question', testId, question.id]"
+          style="margin-right: 8px;">Өңдеу</button>
+        <button nz-button nzType="primary" nzDanger (click)="deleteQuestion(question.id)">Жою</button>
       </div>
     </div>
   </form>
