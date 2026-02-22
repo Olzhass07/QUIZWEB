@@ -1,73 +1,70 @@
-<div style="margin: auto; width: 80%; padding-top: 20px;">
-  <div class="test-header" style="margin-bottom: 20px;">
-    <nz-progress [nzPercent]="getProgress()" [nzStatus]="'active'"></nz-progress>
-    <div class="timer-container"
-      style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-      <div class="question-count">
-        Сұрақ {{ currentQuestionIndex + 1 }} / {{ questions.length }}
+<div class="test-interface animate-fade">
+  <!-- Status & Progress -->
+  <div class="test-header">
+    <div class="quiz-info">
+      <div class="q-count">
+        Сұрақ {{ currentQuestionIndex + 1 }} <span>/ {{ questions.length }}</span>
       </div>
-      <div class="timer" [class.pulse-red]="timeRemaining <= 10">
-        <i nz-icon nzType="clock-circle"></i> {{ getFormattedTime() }}
+      <div class="timer-badge" [class.danger]="timeRemaining <= 30">
+        <i nz-icon nzType="clock-circle"></i>
+        {{ getFormattedTime() }}
+      </div>
+    </div>
+    <nz-progress [nzPercent]="getProgress()" [nzShowInfo]="false" [nzStrokeWidth]="12"
+      [nzStrokeColor]="{ '0%': '#6366f1', '100%': '#8b5cf6' }"></nz-progress>
+  </div>
+
+  <!-- Question Content -->
+  <div *ngIf="questions.length > 0">
+    <div class="question-card" [class.entry]="!isAnimating">
+      <div class="question-text">
+        {{ questions[currentQuestionIndex].questionText }}
+      </div>
+
+      <div class="options-list" [ngSwitch]="questions[currentQuestionIndex].questionType">
+        <!-- Multiple Choice -->
+        <div *ngSwitchCase="'MULTIPLE_CHOICE'">
+          <nz-radio-group [(ngModel)]="selectedAnswers[questions[currentQuestionIndex].id]"
+            (ngModelChange)="onAnswerChange(questions[currentQuestionIndex].id, $event)">
+            <label nz-radio nzValue="optionA">{{ questions[currentQuestionIndex].optionA }}</label>
+            <label nz-radio nzValue="optionB">{{ questions[currentQuestionIndex].optionB }}</label>
+            <label nz-radio nzValue="optionC">{{ questions[currentQuestionIndex].optionC }}</label>
+            <label nz-radio nzValue="optionD">{{ questions[currentQuestionIndex].optionD }}</label>
+          </nz-radio-group>
+        </div>
+
+        <!-- True/False -->
+        <div *ngSwitchCase="'TRUE_FALSE'">
+          <nz-radio-group [(ngModel)]="selectedAnswers[questions[currentQuestionIndex].id]"
+            (ngModelChange)="onAnswerChange(questions[currentQuestionIndex].id, $event)">
+            <label nz-radio nzValue="True">Ақиқат</label>
+            <label nz-radio nzValue="False">Жалған</label>
+          </nz-radio-group>
+        </div>
+
+        <!-- Short Answer -->
+        <div *ngSwitchCase="'SHORT_ANSWER'">
+          <input nz-input class="premium-input" placeholder="Жауабыңызды осында жазыңыз..."
+            [(ngModel)]="selectedAnswers[questions[currentQuestionIndex].id]"
+            (ngModelChange)="onAnswerChange(questions[currentQuestionIndex].id, $event)" />
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="nav-controls">
+        <button nz-button nzType="default" (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">
+          <i nz-icon nzType="arrow-left"></i> Алдыңғы
+        </button>
+
+        <button *ngIf="currentQuestionIndex < questions.length - 1" nz-button nzType="primary" (click)="nextQuestion()">
+          Келесі <i nz-icon nzType="arrow-right"></i>
+        </button>
+
+        <button *ngIf="currentQuestionIndex === questions.length - 1" nz-button nzType="primary"
+          (click)="submitAnswers()" [nzLoading]="isSubmitted">
+          Аяқтау <i nz-icon nzType="send"></i>
+        </button>
       </div>
     </div>
   </div>
-
-  <form (ngSubmit)="submitAnswers()">
-    <div *ngIf="questions.length > 0">
-      <div class="question-container" [class.slide-in]="!isAnimating">
-        <div class="question">
-          <h3>{{ questions[currentQuestionIndex].questionText }}</h3>
-
-          <div [ngSwitch]="questions[currentQuestionIndex].questionType">
-            <!-- Multiple Choice -->
-            <div *ngSwitchCase="'MULTIPLE_CHOICE'">
-              <nz-radio-group [(ngModel)]="selectedAnswers[questions[currentQuestionIndex].id]"
-                name="ans{{questions[currentQuestionIndex].id}}">
-                <label nz-radio nzValue="optionA" style="display: block; margin-bottom: 10px;">{{
-                  questions[currentQuestionIndex].optionA }}</label>
-                <label nz-radio nzValue="optionB" style="display: block; margin-bottom: 10px;">{{
-                  questions[currentQuestionIndex].optionB }}</label>
-                <label nz-radio nzValue="optionC" style="display: block; margin-bottom: 10px;">{{
-                  questions[currentQuestionIndex].optionC }}</label>
-                <label nz-radio nzValue="optionD" style="display: block; margin-bottom: 10px;">{{
-                  questions[currentQuestionIndex].optionD }}</label>
-              </nz-radio-group>
-            </div>
-
-            <!-- True or False -->
-            <div *ngSwitchCase="'TRUE_FALSE'">
-              <nz-radio-group [(ngModel)]="selectedAnswers[questions[currentQuestionIndex].id]"
-                name="ans{{questions[currentQuestionIndex].id}}">
-                <label nz-radio nzValue="True" style="display: block; margin-bottom: 10px;">Ақиқат</label>
-                <label nz-radio nzValue="False" style="display: block; margin-bottom: 10px;">Жалған</label>
-              </nz-radio-group>
-            </div>
-
-            <!-- Short Answer -->
-            <div *ngSwitchCase="'SHORT_ANSWER'">
-              <input nz-input type="text" placeholder="Жауабыңызды жазыңыз"
-                [(ngModel)]="selectedAnswers[questions[currentQuestionIndex].id]"
-                name="ans{{questions[currentQuestionIndex].id}}" />
-            </div>
-          </div>
-        </div>
-
-        <div class="navigation-buttons" style="margin-top: 30px; display: flex; justify-content: space-between;">
-          <button nz-button nzType="default" type="button" (click)="previousQuestion()"
-            [disabled]="currentQuestionIndex === 0">
-            <i nz-icon nzType="left"></i> Алдыңғы
-          </button>
-
-          <button *ngIf="currentQuestionIndex < questions.length - 1" nz-button nzType="primary" type="button"
-            (click)="nextQuestion()">
-            Келесі <i nz-icon nzType="right"></i>
-          </button>
-
-          <button *ngIf="currentQuestionIndex === questions.length - 1" nz-button nzType="primary" type="submit">
-            Аяқтау <i nz-icon nzType="check"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </form>
 </div>

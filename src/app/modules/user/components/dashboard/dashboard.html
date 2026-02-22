@@ -1,14 +1,29 @@
-<div class="main">
-  <div nz-row>
-    <div nz-col nzSpan="24" style="margin-bottom: 20px;">
-      <span style="margin: 20px;" *ngFor="let test of tests">
-        <nz-card [nzBordered]="true" class="test" nzTitle="{{ test.title }}">
-          <p><strong>Уақыт:</strong> {{ getFormattedTime(test.time) }}</p>
-          <p><strong>Сипаттама:</strong> {{ test.description }}</p>
+<div class="dashboard-container animate-fade">
+  <div class="welcome-banner">
+    <h1>Таңдаулы тесттер</h1>
+    <p>Біліміңізді шыңдауға арналған өзекті тесттер жинағы</p>
+  </div>
 
-          <button nz-button nzType="primary" routerLink="/user/take-test/{{test.id}}">Тесті бастау</button>
+  <div class="test-grid">
+    <nz-card *ngFor="let test of tests" class="test-card">
+      <div class="title">{{ test.title }}</div>
+      <div class="description">{{ test.description }}</div>
 
-        </nz-card>
-      </span>
+      <div class="footer">
+        <div class="info">
+          <span><i nz-icon nzType="clock-circle"></i> {{ (test.time / 60) | number:'1.0-0' }} мин</span>
+          <span><i nz-icon nzType="question-circle"></i> Сұрақтар</span>
+        </div>
+        <button nz-button nzType="primary" [routerLink]="['/user/take-test', test.id]">
+          Бастау
+        </button>
+      </div>
+    </nz-card>
+  </div>
+
+  <div *ngIf="tests?.length === 0" style="text-align: center; padding: 100px;">
+    <i nz-icon nzType="file-search" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 20px;"></i>
+    <h3>Қазіргі уақытта тесттер жоқ.</h3>
+    <p style="color: var(--text-muted)">Кейінірек қайта тексеріп көріңіз.</p>
   </div>
 </div>

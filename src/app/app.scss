@@ -1,37 +1,162 @@
- $secondary-color: #141a33;
-$primary-color: #F48023;
-$White: #FFFFFF;
+@import '../styles.scss';
 
-.main-header {
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.glass-nav {
+    position: sticky;
+    top: 16px;
+    z-index: 1000;
+    margin: 0 24px;
+    background: var(--glass);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 12px 32px;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+
+    .nav-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
+.logo-section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0px 57px;
-    background-color: $primary-color;
-    height: auto;
+    gap: 12px;
+    cursor: pointer;
+    transition: opacity 0.3s;
 
-    a.active {
-        background: $secondary-color;
+    &:hover {
+        opacity: 0.8;
     }
 
-    a{
-        font-weight: 300;
-        font-size: 15px;
-        border-radius: 0px;
-        color: $White;
+    .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 800;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
     }
 
-    a.ant-btn {
-        &:hover {
-            color: $White;
-            background-color: $secondary-color;
+    .logo-text {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text-main);
+        letter-spacing: -0.5px;
+
+        .accent-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
     }
-    img{
-        width: 180px;
+}
 
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .nav-item {
+        color: var(--text-muted);
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        &:hover,
+        &.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.08);
+        }
     }
-    .img_profile {
-        width: 25px;
+}
+
+.nav-btn-primary {
+    background: var(--primary);
+    color: white;
+    padding: 10px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(99, 102, 241, 0.25);
+    }
+}
+
+.nav-btn-outline {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: var(--text-main);
+    padding: 8px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: var(--error);
+        color: var(--error);
+        background: rgba(239, 68, 68, 0.05);
+    }
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px 24px;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.glass-footer {
+    margin-top: auto;
+    padding: 32px;
+    text-align: center;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .logo-text {
+        display: none;
+    }
+
+    .glass-nav {
+        margin: 12px;
+        padding: 10px 20px;
+    }
+
+    .nav-links {
+        gap: 4px;
+    }
+
+    .nav-item span {
+        display: none;
     }
 }

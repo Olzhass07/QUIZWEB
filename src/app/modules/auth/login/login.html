@@ -1,30 +1,42 @@
-<div class="gb" style="background-color: #F8F8F8;">
-    <div class="parent">
-        <div class="child">
-            <div nz-row class="imgDiv">
-                <h1 style="margin-left: 100px;">Кіру</h1>
-            </div>
-            <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Электрондық поштаны енгізіңіз!">
-                        <input type="text" nz-input formControlName="email" placeholder="Электрондық пошта" />
-                    </nz-form-control>
-                </nz-form-item>
-                <nz-form-item>
-                    <nz-form-control nzErrorTip="Құпиясөзді енгізіңіз!">
-                        <nz-input-group [nzSuffix]="suffixTemplate">
-                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password"
-                                placeholder="Құпиясөз" />
-                        </nz-input-group>
-                        <ng-template #suffixTemplate>
-                            <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-                                (click)="passwordVisible = !passwordVisible"></i>
-                        </ng-template>
-                    </nz-form-control>
-                </nz-form-item>
-                <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'">Кіру</button>
-                Немесе <a routerLink="/register"> қазір тіркеліңіз! </a>
-            </form>
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h1>Қош келдіңіз!</h1>
+            <p>Жүйеге кіру үшін деректеріңізді енгізіңіз</p>
         </div>
+
+        <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="submitForm()">
+            <div class="form-group">
+                <label>Электрондық пошта</label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Жарамды email енгізіңіз!">
+                        <input type="email" nz-input formControlName="email" placeholder="email@example.com" />
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <div class="form-group">
+                <label>Құпия сөз</label>
+                <nz-form-item>
+                    <nz-form-control nzErrorTip="Құпия сөзді енгізіңіз!">
+                        <div class="password-input-wrapper">
+                            <input [type]="passwordVisible ? 'text' : 'password'" nz-input formControlName="password"
+                                placeholder="Құпия сөз" />
+                            <span class="eye-icon" (click)="passwordVisible = !passwordVisible">
+                                <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"></i>
+                            </span>
+                        </div>
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+
+            <button nz-button class="login-form-button" nzType="primary" [nzLoading]="false">
+                Кіру
+            </button>
+
+            <div class="auth-footer">
+                Аккаунтыңыз жоқ па? <a routerLink="/register">Тіркелу</a>
+            </div>
+        </form>
     </div>
 </div>

@@ -1,45 +1,59 @@
-<div *ngIf="!isUserLoggedIn && !isAdminLoggedIn">
-  <nz-header class="main-header" nz-row nzType="flex" style="background-color: #003973; ">
-    <div>
-      <a style="color: white; margin-left:50px ; font-size:18px ; font-weight: bolder;" routerLink="/login">
-        Тест қолданбасы</a>
+<div class="app-layout">
+  <!-- Modern Floating Navbar -->
+  <nav class="glass-nav">
+    <div class="nav-container">
+      <div class="logo-section" routerLink="/">
+        <div class="logo-icon">Q</div>
+        <span class="logo-text">Quiz<span class="accent-text">Master</span></span>
+      </div>
+
+      <!-- Logged Out Links -->
+      <div class="nav-links" *ngIf="!isUserLoggedIn && !isAdminLoggedIn">
+        <a routerLink="/login" routerLinkActive="active" class="nav-item">Кіру</a>
+        <a routerLink="/register" class="nav-btn-primary">Тіркелу</a>
+      </div>
+
+      <!-- User Links -->
+      <div class="nav-links" *ngIf="isUserLoggedIn">
+        <a routerLink="/user/dashboard" routerLinkActive="active" class="nav-item">
+          <i nz-icon nzType="dashboard"></i> Дашборд
+        </a>
+        <a routerLink="/user/view-test-results" routerLinkActive="active" class="nav-item">
+          <i nz-icon nzType="history"></i> Нәтижелер
+        </a>
+        <a routerLink="/user/profile" routerLinkActive="active" class="nav-item">
+          <i nz-icon nzType="user"></i> Профиль
+        </a>
+        <button class="nav-btn-outline" (click)="logout()">
+          Шығу <i nz-icon nzType="logout"></i>
+        </button>
+      </div>
+
+      <!-- Admin Links -->
+      <div class="nav-links" *ngIf="isAdminLoggedIn">
+        <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item">
+          <i nz-icon nzType="appstore"></i> Тесттер
+        </a>
+        <a routerLink="/admin/create-test" routerLinkActive="active" class="nav-item">
+          <i nz-icon nzType="plus-circle"></i> Құру
+        </a>
+        <a routerLink="/admin/view-test-results" routerLinkActive="active" class="nav-item">
+          <i nz-icon nzType="bar-chart"></i> Барлық нәтижелер
+        </a>
+        <button class="nav-btn-outline" (click)="logout()">
+          Шығу <i nz-icon nzType="logout"></i>
+        </button>
+      </div>
     </div>
-    <div class="nav-links">
-      <a nz-button nzType="link" routerLink="/register" routerLinkActive="active"> Тіркелу </a>
-      <a nz-button nzType="link" routerLink="/login" routerLinkActive="active"> Кіру </a>
-    </div>
-  </nz-header>
+  </nav>
+
+  <!-- Content Area -->
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Minimal Footer -->
+  <footer class="glass-footer">
+    <p>© 2026 QuizMaster. Барлық құқықтар қорғалған.</p>
+  </footer>
 </div>
-
-<div *ngIf="isAdminLoggedIn">
-  <nz-header class="main-header" nz-row nzType="flex" style="background-color: #003973; ">
-    <div>
-      <a style="color: white; margin-left:50px ; font-size:18px ; font-weight: bolder;" routerLink="/admin/dashboard">
-        Тест қолданбасы</a>
-    </div>
-    <div class="nav-links">
-      <a nz-button nzType="link" routerLink="/admin/dashboard" routerLinkActive="active"> Панель </a>
-      <a nz-button nzType="link" routerLink="/admin/create-test" routerLinkActive="active"> Тест құру </a>
-      <a nz-button nzType="link" routerLink="/admin/view-test-results" routerLinkActive="active"> Нәтижелерді көру </a>
-      <a nz-button nzType="link" (click)="logout()"> Шығу </a>
-    </div>
-  </nz-header>
-</div>
-
-
-<div *ngIf="isUserLoggedIn">
-  <nz-header class="main-header" nz-row nzType="flex" style="background-color: #003973; ">
-    <div>
-      <a style="color: white; margin-left:50px ; font-size:18px ; font-weight: bolder;" routerLink="/user/dashboard">
-        Тест қолданбасы</a>
-    </div>
-    <div class="nav-links">
-      <a nz-button nzType="link" routerLink="/user/dashboard" routerLinkActive="active"> Панель </a>
-      <a nz-button nzType="link" routerLink="/user/view-test-results" routerLinkActive="active"> Нәтижелерді көру </a>
-      <a nz-button nzType="link" routerLink="/user/profile" routerLinkActive="active"> Профиль </a>
-      <a nz-button nzType="link" (click)="logout()"> Шығу </a>
-    </div>
-  </nz-header>
-</div>
-
-<router-outlet></router-outlet>

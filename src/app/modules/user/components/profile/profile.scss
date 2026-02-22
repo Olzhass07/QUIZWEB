@@ -1,39 +1,105 @@
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 32px;
+}
+
 .stats-card {
-    background: linear-gradient(135deg, #003973 0%, #e5e5be 100%);
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 57, 115, 0.2);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    border: none;
 
     ::ng-deep {
+        .ant-card-head {
+            border: none;
+        }
+
         .ant-card-head-title {
-            color: white;
-            font-weight: 700;
+            color: white !important;
+            font-size: 1.2rem;
         }
 
         .ant-statistic-title {
-            color: rgba(255, 255, 255, 0.8) !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 600;
         }
 
         .ant-statistic-content {
             color: white !important;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            font-weight: 800;
         }
     }
 }
 
 .profile-card {
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 24px;
+}
 
-    &:hover {
-        transform: translateY(-5px);
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: var(--text-main);
+
+    i {
+        color: var(--primary);
     }
 }
 
-.progress-container {
-    margin-top: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 10px;
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+@media (max-width: 992px) {
+    .profile-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+}
+
+.password-input-wrapper {
+    position: relative;
+
+    .eye-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--text-muted);
+        z-index: 10;
+    }
+}
+
+.table-premium {
+    ::ng-deep {
+        .ant-table {
+            background: transparent;
+        }
+
+        .ant-table-thead>tr>th {
+            background: rgba(99, 102, 241, 0.05) !important;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+    }
 }

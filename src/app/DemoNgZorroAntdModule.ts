@@ -19,6 +19,7 @@ import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 @NgModule({
   exports: [
@@ -40,7 +41,8 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
     NzStatisticModule,
     NzProgressModule,
     NzInputNumberModule,
-    NzRadioModule
+    NzRadioModule,
+    NzTagModule
   ],
 })
 export class DemoNgZorroAntdModule { }

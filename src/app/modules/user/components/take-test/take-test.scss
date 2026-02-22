@@ -1,50 +1,167 @@
-.timer {
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 8px 16px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+.test-interface {
+    max-width: 900px;
+    margin: 40px auto;
 }
 
-.pulse-red {
-    background-color: #fff1f0;
-    border: 1px solid #ffa39e;
-    color: #cf1322;
-    animation: pulse 1s infinite alternate;
+.test-header {
+    margin-bottom: 32px;
+
+    .quiz-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-bottom: 16px;
+
+        .q-count {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-main);
+
+            span {
+                color: var(--text-muted);
+                font-weight: 500;
+                font-size: 0.9rem;
+            }
+        }
+
+        .timer-badge {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            font-family: monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+
+            &.danger {
+                color: var(--error);
+                background: #fff1f0;
+                border-color: #ffa39e;
+                animation: shake 0.5s infinite;
+            }
+        }
+    }
 }
 
-@keyframes pulse {
-    from {
-        transform: scale(1);
-        box-shadow: 0 0 0 rgba(207, 19, 34, 0);
+.question-card {
+    background: white;
+    border-radius: 32px;
+    padding: 48px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+
+    &.animating {
+        animation: fadeOutLeft 0.3s ease forwards;
     }
 
+    &.entry {
+        animation: fadeInRight 0.4s ease forwards;
+    }
+
+    .question-text {
+        font-size: 1.6rem;
+        font-weight: 800;
+        line-height: 1.4;
+        color: var(--text-main);
+        margin-bottom: 40px;
+        letter-spacing: -0.5px;
+    }
+}
+
+.options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    ::ng-deep {
+        .ant-radio-group {
+            width: 100%;
+        }
+
+        .ant-radio-wrapper {
+            margin: 0;
+            width: 100%;
+            padding: 20px 24px;
+            border-radius: 16px;
+            border: 2px solid #f1f5f9;
+            background: #f8fafc;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+
+            &:hover {
+                border-color: var(--primary);
+                background: white;
+                transform: scale(1.01);
+            }
+
+            &.ant-radio-wrapper-checked {
+                border-color: var(--primary);
+                background: rgba(99, 102, 241, 0.05);
+                box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            }
+
+            span:last-child {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--text-main);
+                padding-left: 12px;
+            }
+        }
+    }
+}
+
+.nav-controls {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+
+    button {
+        height: 52px !important;
+        padding: 0 32px !important;
+        border-radius: 16px !important;
+        font-weight: 700 !important;
+        font-size: 1rem !important;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-2px);
+    }
+
+    75% {
+        transform: translateX(2px);
+    }
+}
+
+@keyframes fadeOutLeft {
     to {
-        transform: scale(1.05);
-        box-shadow: 0 0 10px rgba(207, 19, 34, 0.5);
+        opacity: 0;
+        transform: translateX(-40px);
     }
 }
 
-.slide-in {
-    animation: slideIn 0.5s ease-out;
-}
-
-@keyframes slideIn {
+@keyframes fadeInRight {
     from {
         opacity: 0;
-        transform: translateX(50px);
+        transform: translateX(40px);
     }
 
     to {
         opacity: 1;
         transform: translateX(0);
     }
-}
-
-.question-container {
-    padding: 24px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }

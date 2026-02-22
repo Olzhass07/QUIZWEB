@@ -1,25 +1,52 @@
-<div style="padding: 20px">
-  <nz-table #basicTable [nzData]="dataSet">
-    <thead>
-      <tr>
-        <th>Тест атауы</th>
-        <th>Жалпы сұрақтар</th>
-        <th>Дұрыс жауаптар</th>
-        <th>Пайыз</th>
-        <th>Әрекет</th>
-      </tr>
-    </thead>
+<div class="results-page animate-fade">
+  <div class="page-header"
+    style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center;">
+    <h1 style="font-size: 2rem; font-weight: 800; color: var(--text-main); margin: 0;">Менің нәтижелерім</h1>
+    <nz-tag nzColor="blue" style="border-radius: 8px; font-weight: 700; padding: 4px 12px">
+      Барлығы: {{ dataSet?.length || 0 }}
+    </nz-tag>
+  </div>
 
-    <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>{{ data.testName }}</td>
-        <td>{{ data.totalQuestions }}</td>
-        <td>{{ data.correctAnswers }}</td>
-        <td>{{ data.percentage }}%</td>
-        <td>
-          <button nz-button nzType="link" [routerLink]="['/user/result-detail', data.id]">Көру</button>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+  <nz-card [nzBordered]="false" class="glass-card" style="padding: 0;">
+    <nz-table #basicTable [nzData]="dataSet" class="table-premium">
+      <thead>
+        <tr>
+          <th><i nz-icon nzType="file-text"></i> Тест атауы</th>
+          <th><i nz-icon nzType="number"></i> Сұрақтар</th>
+          <th><i nz-icon nzType="check-circle"></i> Дұрыс</th>
+          <th><i nz-icon nzType="percentage"></i> Нәтиже</th>
+          <th><i nz-icon nzType="setting"></i> Әрекет</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td><span style="font-weight: 700; color: var(--text-main)">{{ data.testName }}</span></td>
+          <td>{{ data.totalQuestions }}</td>
+          <td style="color: var(--success); font-weight: 700">{{ data.correctAnswers }}</td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <nz-progress [nzPercent]="data.percentage" nzSize="small"
+                [nzStatus]="data.percentage >= 50 ? 'success' : 'exception'" style="width: 100px;"></nz-progress>
+              <span style="font-weight: 800; font-size: 0.85rem;">{{ data.percentage }}%</span>
+            </div>
+          </td>
+          <td>
+            <button nz-button nzType="primary" nzGhost [routerLink]="['/user/result-detail', data.id]"
+              style="border-radius: 8px;">
+              Толығырақ <i nz-icon nzType="right"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </nz-card>
+
+  <div *ngIf="dataSet?.length === 0" style="text-align: center; padding: 100px;">
+    <i nz-icon nzType="history" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 20px;"></i>
+    <h3>Сіз әлі тест тапсырмағансыз.</h3>
+    <button nz-button nzType="primary" routerLink="/user/dashboard" style="margin-top: 20px;">
+      Тесттерге өту
+    </button>
+  </div>
 </div>

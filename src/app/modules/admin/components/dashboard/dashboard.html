@@ -1,17 +1,45 @@
-<div class="main">
-  <div nz-row>
-    <div nz-col nzSpan="24" style="margin-bottom: 20px;">
-      <span style="margin: 20px;" *ngFor="let test of tests">
-        <nz-card [nzBordered]="true" class="test" nzTitle="{{ test.title }}">
-          <p><strong>Уақыт:</strong> {{ getFormattedTime(test.time) }}</p>
-          <p><strong>Сипаттама:</strong> {{ test.description }}</p>
+<div class="admin-dashboard animate-fade">
+  <div class="page-header">
+    <h1>Тесттерді басқару</h1>
+    <button nz-button nzType="primary" routerLink="/admin/create-test">
+      <i nz-icon nzType="plus"></i> Жаңа тест қосу
+    </button>
+  </div>
 
-          <button nz-button nzType="primary" routerLink="/admin/view-test/{{test.id}}">Тестті көру</button>
-          <button nz-button nzType="default" style="margin: 0 5px;" routerLink="/admin/edit-test/{{test.id}}">Өңдеу</button>
-          <button nz-button nzType="primary" style="margin-right: 5px;"
-          routerLink="/admin/add-question/{{test.id}}">Сұрақ қосу</button>
-          <button nz-button nzType="default" nzDanger (click)="onDeleteTest(test.id)">Жою</button>
-        </nz-card>
-      </span>
+  <div class="admin-grid">
+    <div *ngFor="let test of tests" class="admin-test-card">
+      <div class="card-top">
+        <span class="test-badge">ID: {{ test.id }}</span>
+        <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: 600;">
+          <i nz-icon nzType="clock-circle"></i> {{ test.time }} сек
+        </span>
+      </div>
+
+      <div class="test-title">{{ test.title }}</div>
+      <div class="test-desc">{{ test.description }}</div>
+
+      <div class="actions">
+        <button nz-button nzType="default" [routerLink]="['/admin/view-test', test.id]">
+          <i nz-icon nzType="eye"></i> Қарау
+        </button>
+        <button nz-button nzType="default" [routerLink]="['/admin/edit-test', test.id]">
+          <i nz-icon nzType="edit"></i> Өңдеу
+        </button>
+      </div>
+
+      <div class="danger-zone">
+        <span class="delete-btn" (click)="onDeleteTest(test.id)">
+          <i nz-icon nzType="delete"></i> Жою
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tests?.length === 0" style="text-align: center; padding: 100px;">
+    <i nz-icon nzType="file-add" style="font-size: 4rem; color: #cbd5e1; margin-bottom: 20px;"></i>
+    <h3>Әлі тесттер жасалмаған.</h3>
+    <button nz-button nzType="primary" routerLink="/admin/create-test" style="margin-top: 20px;">
+      Алғашқы тестті құру
+    </button>
   </div>
 </div>
