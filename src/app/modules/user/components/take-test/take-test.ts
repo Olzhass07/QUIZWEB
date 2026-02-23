@@ -16,6 +16,7 @@ export class TakeTest {
 
   questions: any[] = [];
   testId: any;
+  apiBaseUrl = '';
 
   selectedAnswers: { [key: number]: string } = {};
 
@@ -33,6 +34,8 @@ export class TakeTest {
   ) { }
 
   ngOnInit() {
+    this.apiBaseUrl = this.testService.getApiBaseUrl();
+
     this.activatedRoute.paramMap.subscribe(params => {
       this.testId = +params.get('id');
 
@@ -135,5 +138,25 @@ export class TakeTest {
       this.isSubmitted = false; // Позволяем попробовать еще раз при ошибке
       this.message.error(`${error.error}`, { nzDuration: 5000 });
     });
+  }
+
+  resolveImageUrl(question: any): string {
+    const imageUrl = question?.imageUrl;
+    if (typeof imageUrl === 'string' && imageUrl.trim()) {
+      if (/^https?:\/\//i.test(imageUrl)) {
+        return imageUrl;
+      }
+      const baseUrl = this.apiBaseUrl.replace(/\/+$/, '');
+      const normalizedPath = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+      return `${baseUrl}${normalizedPath}`;
+    }
+
+    const questionId = question?.id ?? question?.questionId;
+    if (questionId) {
+      const baseUrl = this.apiBaseUrl.replace(/\/+$/, '');
+      return `${baseUrl}/api/test/question/${questionId}/image`;
+    }
+
+    return '';
   }
 }

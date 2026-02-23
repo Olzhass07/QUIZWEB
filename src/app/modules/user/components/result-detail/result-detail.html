@@ -32,6 +32,11 @@
 
             <h4>{{ i + 1 }}. {{ detail.questionText }}</h4>
 
+            <div *ngIf="detail.hasImage === true" style="margin-bottom: 16px;">
+                <img [src]="resolveImageUrl(detail)" alt="Question image"
+                    style="max-width: 100%; max-height: 260px; border-radius: 12px; border: 1px solid #e2e8f0; object-fit: contain;" />
+            </div>
+
             <div class="answer-row">
                 <div class="ans-box" [class.user-ans]="detail.correct || detail.isCorrect"
                     [class.wrong-ans]="!(detail.correct || detail.isCorrect)">

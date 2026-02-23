@@ -81,6 +81,40 @@ nz-form-label {
     margin-top: 10px;
 }
 
+.image-upload-block {
+    margin-top: 24px;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.current-image-box {
+    margin-bottom: 12px;
+}
+
+.question-image-preview {
+    max-width: 100%;
+    max-height: 240px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    object-fit: contain;
+}
+
+.file-name {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.remove-image-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
 @media (max-width: 768px) {
     .options-grid {
         grid-template-columns: 1fr;

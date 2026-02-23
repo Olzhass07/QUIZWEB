@@ -11,6 +11,10 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
+  getApiBaseUrl(): string {
+    return BASIC_URL;
+  }
+
   createTest(testDto): Observable<any> {
     return this.http.post(BASIC_URL + 'api/test', testDto);
   }
@@ -21,6 +25,10 @@ export class AdminService {
 
   addQuestionInTest(questionDto): Observable<any> {
     return this.http.post(BASIC_URL + 'api/test/question', questionDto);
+  }
+
+  addQuestionInTestWithImage(questionFormData: FormData): Observable<any> {
+    return this.http.post(BASIC_URL + 'api/test/question-with-image', questionFormData);
   }
 
   getTestQuestions(id: number): Observable<any> {
@@ -39,12 +47,20 @@ export class AdminService {
     return this.http.put(BASIC_URL + `api/test/question/${id}`, questionDto);
   }
 
+  updateQuestionWithImage(id: number, questionFormData: FormData): Observable<any> {
+    return this.http.put(BASIC_URL + `api/test/question/${id}/with-image`, questionFormData);
+  }
+
   deleteQuestion(id: number): Observable<any> {
     return this.http.delete(BASIC_URL + `api/test/question/${id}`);
   }
 
   getQuestionById(id: number): Observable<any> {
     return this.http.get(BASIC_URL + `api/test/question-details/${id}`);
+  }
+
+  getQuestionImage(id: number): Observable<Blob> {
+    return this.http.get(BASIC_URL + `api/test/question/${id}/image`, { responseType: 'blob' });
   }
 
   deleteTest(id: number): Observable<any> {

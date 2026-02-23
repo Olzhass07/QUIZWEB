@@ -12,6 +12,10 @@ export class TestService {
 
   constructor(private http: HttpClient) { }
 
+  getApiBaseUrl(): string {
+    return BASIC_URL;
+  }
+
   getAllTest(): Observable<any> {
     return this.http.get(BASIC_URL + 'api/test');
   }

@@ -21,6 +21,11 @@
         {{ questions[currentQuestionIndex].questionText }}
       </div>
 
+      <div *ngIf="questions[currentQuestionIndex].hasImage === true" style="margin-bottom: 16px;">
+        <img [src]="resolveImageUrl(questions[currentQuestionIndex])" alt="Question image"
+          style="max-width: 100%; max-height: 300px; border-radius: 12px; border: 1px solid #e2e8f0; object-fit: contain;" />
+      </div>
+
       <div class="options-list" [ngSwitch]="questions[currentQuestionIndex].questionType">
         <!-- Multiple Choice -->
         <div *ngSwitchCase="'MULTIPLE_CHOICE'">

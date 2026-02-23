@@ -15,6 +15,7 @@ export class ViewTest {
   testData: any;
   questions: any[] = [];
   testId: any;
+  apiBaseUrl = '';
 
   constructor(private adminService: AdminService,
     private activatedRoute: ActivatedRoute,
@@ -22,6 +23,8 @@ export class ViewTest {
   ) { }
 
   ngOnInit() {
+    this.apiBaseUrl = this.adminService.getApiBaseUrl();
+
     this.activatedRoute.paramMap.subscribe(params => {
       this.testId = +params.get('id');
       this.getTestDetails();
@@ -44,6 +47,26 @@ export class ViewTest {
         this.notification.error('Қате', `${error.error}`, { nzDuration: 4000 });
       });
     }
+  }
+
+  resolveImageUrl(question: any): string {
+    const imageUrl = question?.imageUrl;
+    if (typeof imageUrl === 'string' && imageUrl.trim()) {
+      if (/^https?:\/\//i.test(imageUrl)) {
+        return imageUrl;
+      }
+      const baseUrl = this.apiBaseUrl.replace(/\/+$/, '');
+      const normalizedPath = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+      return `${baseUrl}${normalizedPath}`;
+    }
+
+    const questionId = question?.id ?? question?.questionId;
+    if (questionId) {
+      const baseUrl = this.apiBaseUrl.replace(/\/+$/, '');
+      return `${baseUrl}/api/test/question/${questionId}/image`;
+    }
+
+    return '';
   }
 
 }

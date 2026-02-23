@@ -6,7 +6,6 @@
     </div>
 
     <form nz-form [formGroup]="questionForm" (ngSubmit)="submitForm()">
-      <!-- Question Text -->
       <div style="margin-bottom: 24px;">
         <nz-form-label [nzNoColon]="true">Сұрақ мәтіні</nz-form-label>
         <nz-form-item>
@@ -18,7 +17,6 @@
       </div>
 
       <div class="options-grid">
-        <!-- Question Type -->
         <div>
           <nz-form-label [nzNoColon]="true">Сұрақ түрі</nz-form-label>
           <nz-form-item>
@@ -32,12 +30,11 @@
           </nz-form-item>
         </div>
 
-        <!-- Correct Option (Dynamic) -->
         <div>
           <nz-form-label [nzNoColon]="true">Дұрыс жауап</nz-form-label>
           <nz-form-item>
             <nz-form-control nzErrorTip="Дұрыс жауапты таңдаңыз!">
-              <ng-container [ngSwitch]="questionForm.get('questionType').value">
+              <ng-container [ngSwitch]="questionForm.get('questionType')?.value">
                 <nz-select *ngSwitchCase="'MULTIPLE_CHOICE'" formControlName="correctOption"
                   placeholder="Нұсқаны таңдаңыз">
                   <nz-option nzValue="optionA" nzLabel="A нұсқасы"></nz-option>
@@ -57,8 +54,7 @@
         </div>
       </div>
 
-      <!-- Multiple Choice Options -->
-      <div *ngIf="questionForm.get('questionType').value === 'MULTIPLE_CHOICE'" class="options-grid"
+      <div *ngIf="questionForm.get('questionType')?.value === 'MULTIPLE_CHOICE'" class="options-grid"
         style="margin-top: 10px; background: rgba(99, 102, 241, 0.03); padding: 20px; border-radius: 16px;">
         <div>
           <nz-form-label [nzNoColon]="true">A нұсқасы</nz-form-label>
@@ -94,7 +90,24 @@
         </div>
       </div>
 
-      <!-- Explanation -->
+      <div class="image-upload-block">
+        <nz-form-label [nzNoColon]="true">Картинка вопроса (optional)</nz-form-label>
+        <div *ngIf="isEditMode && hasExistingImage && !removeCurrentImage" class="current-image-box">
+          <img [src]="resolveImageUrl(existingImageUrl)" alt="Current question image" class="question-image-preview" />
+        </div>
+
+        <input #imageInput type="file" accept="image/*" (change)="onImageSelected($event)" />
+
+        <div *ngIf="selectedImageFile" class="file-name">
+          Выбран файл: {{ selectedImageFile.name }}
+        </div>
+
+        <label *ngIf="isEditMode && hasExistingImage" class="remove-image-toggle">
+          <input type="checkbox" [checked]="removeCurrentImage" (change)="onRemoveImageToggle($event)" />
+          Удалить текущее фото
+        </label>
+      </div>
+
       <div style="margin-top: 24px;">
         <nz-form-label [nzNoColon]="true">Түсініктеме (міндетті емес)</nz-form-label>
         <nz-form-item>

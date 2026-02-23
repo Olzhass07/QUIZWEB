@@ -13,6 +13,7 @@ import { TestService } from '../dashboard/services/test';
 export class ResultDetail {
     resultData: any;
     resultId: any;
+    apiBaseUrl = '';
 
     constructor(
         private testService: TestService,
@@ -20,6 +21,7 @@ export class ResultDetail {
     ) { }
 
     ngOnInit() {
+        this.apiBaseUrl = this.testService.getApiBaseUrl();
         this.resultId = this.activatedRoute.snapshot.params['id'];
         this.getDetails();
     }
@@ -35,5 +37,25 @@ export class ResultDetail {
             return question[optionKey] || optionKey;
         }
         return optionKey;
+    }
+
+    resolveImageUrl(question: any): string {
+        const imageUrl = question?.imageUrl;
+        if (typeof imageUrl === 'string' && imageUrl.trim()) {
+            if (/^https?:\/\//i.test(imageUrl)) {
+                return imageUrl;
+            }
+            const baseUrl = this.apiBaseUrl.replace(/\/+$/, '');
+            const normalizedPath = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
+            return `${baseUrl}${normalizedPath}`;
+        }
+
+        const questionId = question?.id ?? question?.questionId;
+        if (questionId) {
+            const baseUrl = this.apiBaseUrl.replace(/\/+$/, '');
+            return `${baseUrl}/api/test/question/${questionId}/image`;
+        }
+
+        return '';
     }
 }
