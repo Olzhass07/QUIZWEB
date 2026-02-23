@@ -18,12 +18,15 @@
       <div class="test-title">{{ test.title }}</div>
       <div class="test-desc">{{ test.description }}</div>
 
-      <div class="actions">
+      <div class="actions" style="grid-template-columns: 1fr 1fr 1fr;">
         <button nz-button nzType="default" [routerLink]="['/admin/view-test', test.id]">
           <i nz-icon nzType="eye"></i> Қарау
         </button>
         <button nz-button nzType="default" [routerLink]="['/admin/edit-test', test.id]">
           <i nz-icon nzType="edit"></i> Өңдеу
+        </button>
+        <button nz-button nzType="primary" [routerLink]="['/admin/add-question', test.id]">
+          <i nz-icon nzType="plus"></i> Сұрақ
         </button>
       </div>
 

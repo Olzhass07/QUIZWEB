@@ -12,6 +12,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 })
 export class ViewTest {
 
+  testData: any;
   questions: any[] = [];
   testId: any;
 
@@ -29,6 +30,7 @@ export class ViewTest {
 
   getTestDetails() {
     this.adminService.getTestQuestions(this.testId).subscribe(res => {
+      this.testData = res.testDTO;
       this.questions = res.questions;
     })
   }

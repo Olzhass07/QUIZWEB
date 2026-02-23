@@ -1,6 +1,67 @@
-.question{
-    padding: 10px;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-    margin-top: 30px;
-    border-radius: 5px;
+.admin-dashboard {
+    padding: 24px 0;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+
+    h1 {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: var(--text-main);
+        margin: 0;
+    }
+}
+
+.admin-test-card {
+    background: white;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+    margin-bottom: 24px;
+
+    &:hover {
+        box-shadow: var(--shadow-prime);
+        transform: translateY(-4px);
+    }
+}
+
+.test-badge {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.ans-option {
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    border: 1px solid #f1f5f9;
+}
+
+.explanation-box {
+    background: rgba(99, 102, 241, 0.03);
+    padding: 16px 20px;
+    border-radius: 14px;
+    border-left: 4px solid var(--primary);
+    color: var(--text-muted);
+}
+
+.actions {
+    button {
+        height: 44px;
+        padding: 0 24px;
+        border-radius: 12px;
+        font-weight: 700;
+    }
 }

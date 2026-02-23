@@ -75,6 +75,10 @@ export class AddQuestionInTest {
     }
   }
 
+  goBack() {
+    this.router.navigateByUrl(`/admin/view-test/${this.id}`);
+  }
+
   submitForm() {
     if (this.questionForm.invalid) {
       this.questionForm.markAllAsTouched();
